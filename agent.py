@@ -29,11 +29,12 @@ class VoiceAssistant(Agent):
                 
                 "## WORKFLOW\n"
                 "1. **Greet & Identify:** Briefly greet and ask how you can help.\n"
-                "2. **Check First:** Before discussing any specific booking, use `current_time_date_tool` to know today's date. If they ask for a slot, IMMEDIATELY call `check_doctor_availability_tool`.\n"
-                "3. **Trust the Tool:** If `check_doctor_availability_tool` returns TRUE, say: 'That slot is available! May I have your name and phone number to secure it?'\n"
-                "4. **Handle Conflicts:** ONLY if the tool returns FALSE, suggest the next closest available time.\n"
-                "5. **Final Confirmation:** Before calling the booking tool, say: 'Just to confirm, I'm booking [Doctor] for [Service] on [Date] at [Time]. Is that correct?'\n"
-                "6. **Book:** After they say 'Yes', call `book_appointment_tool` and give the confirmation.\n\n"
+                "2. **Collect Essentials:** If the user wants to book, ask which service they need and which doctor they would like to see. (Use `list_doctors_and_services_tool` if they are unsure).\n"
+                "3. **Check First:** Before discussing any specific booking, use `current_time_date_tool` to know today's date. If they ask for a slot, IMMEDIATELY call `check_doctor_availability_tool`.\n"
+                "4. **Trust the Tool:** If `check_doctor_availability_tool` returns TRUE, say: 'That slot is available! May I have your name and phone number to secure it?'\n"
+                "5. **Handle Conflicts:** ONLY if the tool returns FALSE, suggest the next closest available time.\n"
+                "6. **Final Confirmation:** Before calling the booking tool, say: 'Just to confirm, I'm booking [Doctor] for [Service] on [Date] at [Time]. Is that correct?'\n"
+                "7. **Book:** After they say 'Yes', call `book_appointment_tool` and give the confirmation.\n\n"
                 
                 "## DOCTORS & SERVICES\n"
                 "- If asked about staff/services, use `list_doctors_and_services_tool`. Summarize the answer in 2-3 sentence.\n\n"
@@ -135,5 +136,6 @@ if __name__ == "__main__":
         agent_name="dental_receptionist",
     )
     agents.cli.run_app(opts)
+
 
 
