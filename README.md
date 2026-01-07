@@ -82,7 +82,7 @@ You can test the agent using the **LiveKit Playground**.
 **Option B: Testing via Phone (SIP)**
 
 Call the number. Your local terminal will show logs as soon as you speak.
----
+
 
 ## Deployment
 
@@ -90,16 +90,15 @@ To move from local testing to a permanent cloud-hosted agent, deploy to LiveKit 
 
 ### workflow:
 
-1.**Authorize:** via livekit cli, Authorize the LiveKit CLI to access your LiveKit Cloud project.
+1. **Authorize:** via livekit cli, Authorize the LiveKit CLI to access your LiveKit Cloud project.
 
 ```
 lk cloud auth
 ```
 
-2.**Initialize & Secure:** Before deploying, you must register the agent and "mount" your API keys as secure environment variables. This ensures your keys are never stored in the code.
+2. **Initialize & Secure:** Before deploying, you must register the agent and "mount" your API keys as secure environment variables. This ensures your keys are never stored in the code.
 
 Navigate to your project directory containing your `agent.py` or `main.py` and run:
-
 
 ```
 >lk agent create \
@@ -111,14 +110,13 @@ Navigate to your project directory containing your `agent.py` or `main.py` and r
 ```
 this will generate a livekit.toml and docker file and start the build process. It will automatically build the agent container.
 
-3.**Deploy:** Once the agent is registered, use the deploy command to build the **Docker image** and push it to LiveKit’s global infrastructure:
+3. **Deploy:** Once the agent is registered, use the deploy command to build the **Docker image** and push it to LiveKit’s global infrastructure:
 
 
 ```
 lk agent deploy
 
 ```
-
 
 4. **Verify Deployment:** You can verify if your agent is live and see how many "Worker" processes are ready to answer calls:
 
@@ -127,7 +125,7 @@ lk agent deploy
 
 ```
 
-## Key Deployment Points:
+### Key Deployment Points:
 
 - Deployment uses LiveKit’s native agent workflow
 
