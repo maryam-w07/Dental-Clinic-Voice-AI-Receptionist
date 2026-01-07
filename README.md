@@ -21,16 +21,18 @@ The agent behaves like a real receptionist — it confirms details with the call
 
 ## Tech stack
 
-* **Python**
+* **Python** 3.9.13
+* **Docker**
 * **LiveKit Agents** – real‑time voice/media agent framework
 * **OpenAI models**
 
-  * GPT‑4o (LLM reasoning)
+  * GPT‑4o-mini (LLM reasoning)
   * GPT‑4o‑transcribe (speech‑to‑text)
-  * GPT‑4o‑mini‑tts (text‑to‑speech)
+  * tts-1 (text‑to‑speech)
 * **Silero VAD** – voice activity detection
 * **Google Calendar API** – appointment storage and availability checks
-* **LiveKit Cloud** – deployment and telephony integration
+* **LiveKit Cloud Project** – deployment and telephony integration
+* **LiveKit CLI** installed (brew install livekit-cli or equivalent).
 
 ---
 
@@ -51,15 +53,19 @@ The agent behaves like a real receptionist — it confirms details with the call
 2. Create and activate a virtual environment
 3. Install dependencies(requirenments.txt)
 4. Add `.env`, create a livekit cloud project and generate api keys for livekit cloud nd openai.
-5. for google calendar api,authenticate nd add your client_secret.json nd token.json.
-6. Run the agent: you can either install livekit cli or use python agent.py start in ur project terminal.
+5. for google calendar api,authenticate nd add your client_secret.json nd token.json(auto-generated).
+6. purchase a livekit number for telephone integeration and configure the dispatch rules for that number(1 free number per id).
+   -Add the agents name, destination room nd rule type for communication.
+8. Run the agent: you can either install livekit cli or use python agent.py start in ur project terminal.
 
 ```
-python agent.py
+python agent.py start
 ```
 
 You can then test the agent using the **LiveKit Playground**.
 
+-Connect to playground with LiveKit Cloud or manually with a URL(cloud) and token.
+-In the description section before connecting, add the agent's name and room name before connecting.
 
 ---
 
@@ -71,7 +77,7 @@ Key deployment points:
 
 * Secrets (OAuth token) are mounted securely
 * The same codebase works locally and in the cloud
-* Once deployed, the agent runs continuously and answers real calls
+* Once deployed, the agent runs continuously and answers real calls nd books appointments.
 
 ---
 ## Testing
