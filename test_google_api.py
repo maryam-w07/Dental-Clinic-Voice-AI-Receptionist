@@ -6,7 +6,7 @@ import datetime
 # CONFIG
 # -----------------------
 TOKEN_FILE = "token.json"
-CALENDAR_ID = "1d2d18d6223550642fd1a340fcb768f63cfe63ea5b72776931c5e4a2711abd12@group.calendar.google.com"
+CALENDAR_ID = "your_calender_id"
 
 
 # -----------------------
