@@ -23,7 +23,7 @@ The agent behaves like a real receptionist — it confirms details with the call
 
 * **Python** 3.9.13
 * **Docker**
-* **LiveKit Agents** – real‑time voice/media agent framework
+* **LiveKit Agents SDK** – real‑time voice/media agent framework
 * **OpenAI models**
 
   * GPT‑4o-mini (LLM reasoning)
@@ -31,8 +31,8 @@ The agent behaves like a real receptionist — it confirms details with the call
   * tts-1 (text‑to‑speech)
 * **Silero VAD** – voice activity detection
 * **Google Calendar API** – appointment storage and availability checks
-* **LiveKit Cloud Project** – deployment and telephony integration
-* **LiveKit CLI** installed (brew install livekit-cli or equivalent).
+* **LiveKit Cloud Project** – deployment and telephony integration(free tier works).
+* **LiveKit CLI** installed (brew/winget install livekit.LivekitCLI or equivalent).
 
 ---
 
@@ -54,30 +54,63 @@ The agent behaves like a real receptionist — it confirms details with the call
 3. Install dependencies(requirenments.txt)
 4. Add `.env`, create a livekit cloud project and generate api keys for livekit cloud nd openai.
 5. for google calendar api,authenticate nd add your client_secret.json nd token.json(auto-generated).
-6. purchase a livekit number for telephone integeration and configure the dispatch rules for that number(1 free number per id).
-   -Add the agents name, destination room nd rule type for communication.
+6. Go to the LiveKit Dashboard > Telephony.Purchase a number and create a Dispatch Rule.
+  Set the Rule Type to Individual and set the Agent Name to match your local agent's name.
 8. Run the agent: you can either install livekit cli or use python agent.py start in ur project terminal.
 
 ```
 python agent.py start
 ```
+## Testing
 
-You can then test the agent using the **LiveKit Playground**.
+**Option A: Testing via Web**
+
+You can test the agent using the **LiveKit Playground**.
 
 -Connect to playground with LiveKit Cloud or manually with a URL(cloud) and token.
--In the description section before connecting, add the agent's name and room name before connecting.
+-In the Agent/Room Name field, enter the name defined in your code (e.g., dental-receptionist).
 
+**Option B: Testing via Phone (SIP)**
+
+Call the number. Your local terminal will show logs as soon as you speak.
 ---
 
 ## Deployment
 
-This agent is deployed on **LiveKit Cloud**.
+To move from local testing to a permanent cloud-hosted agent, deploy to LiveKit Cloud using the LiveKit CLI managed build workflow.
+
+workflow:
+1.via livekit cli, autherize to livekit cloud project.
+>lk cloud auth
+2.Before deploying, you must register the agent and "mount" your API keys as secure environment variables. This ensures your keys are never stored in the code.
+initialize your agent,navigate to your project directory containing your agent.py or main.py and run
+>lk agent create \
+  --name dental-receptionist \
+  --secrets OPENAI_API_KEY=sk-xxxx \
+  --secrets GOOGLE_CALENDAR_ID=your-email@gmail.com \
+  --secrets LIVEKIT_API_KEY=your-api-key \
+  --secrets LIVEKIT_API_SECRET=your-api-secret
+(this will generate a livekit.toml and docker file and start the build process.
+3.Once the agent is registered, use the deploy command to build the Docker image and push it to LiveKit’s global infrastructure:
+>lk agent deploy
+4. Verify Deployment
+You can check if your agent is live and see how many "Worker" processes are ready to answer calls:
+>lk agent status
 
 Key deployment points:
 
-* Secrets (OAuth token) are mounted securely
-* The same codebase works locally and in the cloud
-* Once deployed, the agent runs continuously and answers real calls nd books appointments.
+* Deployment uses LiveKit’s native agent workflow:
+
+The LiveKit CLI builds the agent container automatically
+
+Secrets are provided via secure mounts
+
+The agent is deployed and managed by LiveKit Cloud
+
+Workers are started on demand for LiveKit sessions and telephony calls
+
+ The same codebase works locally and in the cloud
+
 
 ---
 ## Testing
