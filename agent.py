@@ -1,11 +1,10 @@
 from dotenv import load_dotenv
 load_dotenv()
 import os
-import datetime
 from livekit import agents 
 from livekit.agents import Agent, AgentSession, JobContext, WorkerOptions, function_tool, RunContext
 from livekit.plugins import openai, silero
-from calender_tools import check_doctor_availability, init_calendar, list_doctors_and_services, book_appointment, cancel_appointment, current_time_date,_parse_datetime
+from calender_tools import check_doctor_availability, init_calendar, list_doctors_and_services, book_appointment, cancel_appointment, current_time_date
 
 
 # Initialize calendar client constants
